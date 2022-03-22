@@ -1,61 +1,61 @@
 package main
 
-import ( 
+import (
 	"fmt"
 )
 
-type People interface{
-		DoGreet() string
-	}
+type People interface {
+	DoGreet() string
+}
 
-type GermanType struct{
+type GermanType struct {
 	id int
 }
 
-type FrenchType struc {
+type FrenchType struct {
 	id int
 }
 
-func  (g GermanType) DoGreet() string{
+func (g GermanType) DoGreet() string {
 	return "Guten Tag"
 }
 
-func (f Frenchype) DoGreet() string{
-	return "Bonjoir"
+func (f FrenchType) DoGreet() string {
+	return "Bonjour"
 }
 func InitGermanType(i int) People {
 	return &GermanType{
-	id: i
+		id: i,
+	}
 }
 func InitFrenchType(i int) People {
 	return &FrenchType{
-			id: i
-		}
-func factory(language string, number int) People{
-
-	factoryMap := map[string]func (int)  People{
-		"german":InitGermanType,
-		"french":InitFrenchType,
+		id: i,
 	}
-	newPerson := factoryMap[language](i)
+}
+func factory(language string, number int) People {
 
+	factoryMap := map[string]func(int) People{
+		"german": InitGermanType,
+		"french": InitFrenchType,
+	}
+	newPerson := factoryMap[language](number)
 	return newPerson
 }
 
-
 func main() {
 
-	for int i; i < 2; i++ {
-			if i % 2 ==0 {
-					fmt.Println(i)
-					p:= factory("german",i)
-					p.DoGreet()
-				} else {
-					fmt.Println(i)
-					p:= factory("french",i)
-					p.DoGreet()
-				}
+	for i := 0; i < 2; i++ {
+		if i%2 == 0 {
+			fmt.Print(i, " ")
+			p := factory("german", i)
+			fmt.Println(p.DoGreet())
+		} else {
+			fmt.Print(i, " ")
+			p := factory("french", i)
+			fmt.Println(p.DoGreet())
+		}
 
-			}
+	}
 
-
+}
