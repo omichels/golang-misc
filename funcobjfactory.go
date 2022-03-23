@@ -23,21 +23,19 @@ func (g GermanType) DoGreet() string {
 func (f FrenchType) DoGreet() string {
 	return "Bonjour"
 }
-func InitGermanType(i int) People {
-	return &GermanType{
-		id: i,
-	}
-}
-func InitFrenchType(i int) People {
-	return &FrenchType{
-		id: i,
-	}
-}
-func factory(language string, number int) People {
 
+func factory(language string, number int) People {
 	factoryMap := map[string]func(int) People{
-		"german": InitGermanType,
-		"french": InitFrenchType,
+		"deutsch": func(i int) People {
+			return &GermanType{
+				id: i,
+			}
+		},
+		"francais": func(i int) People {
+			return &FrenchType{
+				id: i,
+			}
+		},
 	}
 	newPerson := factoryMap[language](number)
 	return newPerson
@@ -45,17 +43,15 @@ func factory(language string, number int) People {
 
 func main() {
 
-	for i := 0; i < 2; i++ {
+	for i := 0; i < 4; i++ {
+		var p People
 		if i%2 == 0 {
-			fmt.Print(i, " ")
-			p := factory("german", i)
-			fmt.Println(p.DoGreet())
+			p = factory("deutsch", i)
 		} else {
-			fmt.Print(i, " ")
-			p := factory("french", i)
-			fmt.Println(p.DoGreet())
+			p = factory("francais", i)
 		}
-
+		fmt.Print(i, " ")
+		fmt.Println(p.DoGreet())
 	}
 
 }
